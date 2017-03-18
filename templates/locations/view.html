@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<p>
+    {{ location.name }}
+    {{ location.description }}
+    <a href="{% url 'locations:edit' location.id %}">editeaza aici baws</a>
+</p>
+
+{% endblock %}
