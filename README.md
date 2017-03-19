@@ -17,6 +17,9 @@
   `make run`
   or
   `source .venv/bin/activate; python manage.py runserver`
+## For Windows + Pycharm:
+  Edit configurations (google it) for manage.py and add `runserver` to `Script parameters`.
+  To run/debug, right-click `manage.py` from the project solution and click run/debug.
 
 ## Useful commands
 0. `python manage.py shell -i ipython`
