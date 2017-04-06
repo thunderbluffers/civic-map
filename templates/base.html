@@ -1,4 +1,5 @@
 {% load static %}
+{% load easy_maps_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,10 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
 </head>
 <body>
+
+<!-- Default map with 300x400 dimensions -->
+{% easy_map "Russia, Ekaterinburg, Mira 32" 300 400 %}
+
     <div id="sidebar">
         {% block sidebar %}
         <ul>
