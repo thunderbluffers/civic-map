@@ -1,12 +1,13 @@
 from django.db import models
 from civic_map import settings
 
+
 # Create your models here.
 class Location(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=10240)
-    coordinates_x = models.DecimalField(max_digits=9, decimal_places=6)
-    coordinates_y = models.DecimalField(max_digits=9, decimal_places=6)
+    latitude = models.DecimalField(max_digits=20, decimal_places=18)
+    longitude = models.DecimalField(max_digits=20, decimal_places=18)
     program = models.CharField(max_length=255)
     contact_info = models.CharField(max_length=255)
     tags = models.ManyToManyField('Tag')
@@ -22,8 +23,10 @@ class Location(models.Model):
         from django.urls import reverse
         return reverse('locations:view', args=[str(self.id)])
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=255)
+
 
 class Review(models.Model):
     MARK_1 = 1
@@ -60,4 +63,3 @@ class Review(models.Model):
     # asa ca sau trebuie declarat id ca primary key separat
     # sau putem folosi alea ca primary key si vedem cum se comporta
     # need testing
-

@@ -2,11 +2,43 @@
 {% load i18n %}
 
 {% block content %}
-
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    {% for field in form %}
+        <div class="field-wrapper">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+    {% endfor %}
+
     <input type="submit" value="{% trans "Submit" %}">
 </form>
+{% endblock %}
 
+{% block extrajs %}
+<script>
+// Adds a marker to the map.
+var addMarker = function(location, map) {
+    // Add the marker at the clicked location, and add the next-available label
+    // from the array of alphabetical characters.
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+
+    setTimeout(function() {
+        marker.setMap(null);
+    }, 2000);
+}
+
+google.maps.event.addDomListener(window, 'load', function() {
+    google.maps.event.addListener(window.map, 'click', function(event) {
+        addMarker(event.latLng, window.map);
+        console.log(event.latLng);
+        $('#id_latitude').val(event.latLng.lat());
+        $('#id_longitude').val(event.latLng.lng());
+    });
+});
+</script>
 {% endblock %}
