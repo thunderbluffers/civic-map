@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Location
 from .forms import LocationForm
+from civic_map import settings
 
 
 def index(request):
@@ -70,3 +71,21 @@ def new(request):
     context = {'form': form}
 
     return render(request, 'locations/edit.html', context)
+
+
+def bigmap(request):
+    locations = Location.objects.all()
+
+    lat, lng = settings.EASY_MAPS_CENTER
+
+    initLocation = {
+        'latitude': lat,
+        'longitude': lng,
+    }
+
+    context = {
+        'locations': locations,
+        'initLocation': initLocation
+    }
+
+    return render(request, 'locations/bigmap.html', context)

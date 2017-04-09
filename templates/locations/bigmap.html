@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load map_tags %}
+
+{% block content %}
+
+<div>
+    {% map initLocation.latitude initLocation.longitude %}
+</div>
+
+{% endblock %}
+
+
+
+{% block extrajs %}
+
+<script>
+    var locations = [];
+    {% for location in locations %}
+        locations.push({
+            lat: {{ location.latitude }},
+            lng: {{ location.longitude }}
+        });
+    {% endfor %}
+
+    // Adds a marker to the map.
+    var addMarker = function(location, map) {
+        // Add the marker at the clicked location, and add the next-available label
+        // from the array of alphabetical characters.
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+
+        window.markers.push(marker);
+    }
+
+    google.maps.event.addDomListener(window, 'load', function() {
+        for (i in locations) {
+            addMarker(locations[i], window.map);
+        }
+    });
+</script>
+
+{% endblock %}
