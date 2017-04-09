@@ -78,11 +78,13 @@
         var locationInfo = document.getElementById('locationInfo');
         if (b === true) {
             locationInfo.style.maxHeight = '300px';
+            locationInfo.style.overflow = 'scroll';
         }
         else {
             var aReviews = document.getElementById('aReviews');
             aReviews.href = '';
             locationInfo.style.maxHeight = '0px';
+            locationInfo.style.overflow = 'hidden';
         }
     }
 
@@ -112,6 +114,16 @@
 
             addMarker(location, window.map);
         }
+
+        window.mapElem.style.width = '100%';
+        window.mapElem.style.paddingBottom = '62%';
+        google.maps.event.trigger(map, 'resize');
+
+        window.map.setZoom(16)
+
+        window.map.addListener('click', function() {
+            toggleInfoVisible(false);
+        });
     });
 </script>
 
