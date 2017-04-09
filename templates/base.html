@@ -8,20 +8,15 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'register' %}">Register</a></li>
-            <li><a href="{% url 'locations:index' %}">Locations</a></li>
-        </ul>
-        {% endblock %}
-    </div>
 
-    <div id="content">
+<body>
+    {% include 'partials/header.html' %}
+
+    <div class="container" id="content">
+        <h1>{% block page_title %}{% endblock %}</h1>
+
         {% block content %}{% endblock %}
-    </div>
+    </div><!-- /.container -->
 
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

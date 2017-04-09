@@ -2,14 +2,15 @@
 {% load i18n %}
 {% load map_tags %}
 
+{% block page_title %}
+{{ location.name }}
+{% endblock %}
+
 {% block content %}
-
-<p>
-    {{ location.name }}
-    {{ location.description }}
-    <a href="{% url 'locations:edit' location.id %}">editeaza aici baws</a>
-
+<div>
     {% map location.latitude location.longitude %}
-</p>
 
+    <p>{{ location.description }}</p>
+    <a href="{% url 'locations:edit' location.id %}">editeaza aici baws</a>
+</div>
 {% endblock %}
