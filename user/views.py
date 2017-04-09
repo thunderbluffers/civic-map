@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
-from .forms import RegisterForm
 from django.contrib.auth import views as auth_views
+from .forms import RegisterForm
 
 
 def register(request):
@@ -18,11 +18,10 @@ def register(request):
             )
             if user is not None:
                 auth_views.login(request, user)
-            else:
-                # No backend authenticated the credentials
-                pass
 
-            return render(request, 'registration/register_success.html')
+                return redirect('locations:index')
+            else:
+                return render(request, 'registration/register_success.html')
         else:
             context = {'form': form}
             return render(request, 'registration/register.html', context)

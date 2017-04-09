@@ -23,6 +23,9 @@ class Location(models.Model):
         from django.urls import reverse
         return reverse('locations:view', args=[str(self.id)])
 
+    class Meta:
+        ordering = ['-id']
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
@@ -42,7 +45,7 @@ class Review(models.Model):
         (MARK_5, 'Mark 5'),
     )
 
-    content = models.TextField(max_length=65535)
+    content = models.TextField(max_length=65535, blank=True, null=True)
     mark = models.PositiveSmallIntegerField(
         choices=MARK_CHOICES,
         default=MARK_1,
@@ -56,6 +59,9 @@ class Review(models.Model):
         'Location',
         on_delete=models.CASCADE
     )
+
+    class Meta:
+        ordering = ['-id']
 
     # pentru unique ar trebui folosit ceva gen
     # https://stackoverflow.com/questions/2270808/compound-composite-primary-unique-key-with-django

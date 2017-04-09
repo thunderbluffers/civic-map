@@ -1,5 +1,5 @@
 from django import forms
-from .models import Location
+from .models import Location, Review
 
 from easy_maps.widgets import MapWidget
 
@@ -24,8 +24,14 @@ class LocationForm(forms.ModelForm):
 
     class Meta:
         model = Location
-        exclude = ['user', 'tags']
+        exclude = ('user', 'tags')
         widgets = {
             'latitude': forms.NumberInput({'size': 22}),
             'longitude': forms.NumberInput({'size': 22}),
         }
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        exclude = ('user', 'location')
