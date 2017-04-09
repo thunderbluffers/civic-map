@@ -19,23 +19,28 @@
                 {% map initLocation.latitude initLocation.longitude %}
             </div>
 
-            <div id="locationInfo" style="overflow: hidden; transition: max-height 0.4s; max-height: 0px; border-style: solid; border-width: 2px">
-                <h2 id="hName"></h2>
-                <ul>
-                    <li>
-                        <b>Description: </b>
-                        <p id="pDescription"></p>
-                    </li>
-                    <li>
-                        <b>Program: </b>
-                        <p id="pProgram"></p>
-                    </li>
-                    <li>
-                        <b>Contact: </b>
-                        <p id="pContact"></p>
-                    </li>
-                </ul>
-                <a id="aReviews" href="">View reviews</a>
+            <!--<div id="locationInfo" class="panel panel-default" style="overflow: hidden; transition: max-height 0.4s; max-height: 0px">-->
+            <div id="locationInfo" class="panel panel-default panel-collapse collapse" style="overflow: hidden">
+                <div class="panel-heading">
+                    <h2 id="hName"></h2>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>
+                            <b>Description: </b>
+                            <p id="pDescription"></p>
+                        </li>
+                        <li>
+                            <b>Program: </b>
+                            <p id="pProgram"></p>
+                        </li>
+                        <li>
+                            <b>Contact: </b>
+                            <p id="pContact"></p>
+                        </li>
+                    </ul>
+                    <a id="aReviews" href="">View reviews</a>
+                </div>
             </div>
         </div>
     </div>
@@ -77,14 +82,14 @@
     var toggleInfoVisible = function(b) {
         var locationInfo = document.getElementById('locationInfo');
         if (b === true) {
-            locationInfo.style.maxHeight = '300px';
-            locationInfo.style.overflow = 'scroll';
+            //locationInfo.style.maxHeight = '300px';
+            $('#locationInfo').collapse('show');
         }
         else {
             var aReviews = document.getElementById('aReviews');
             aReviews.href = '';
-            locationInfo.style.maxHeight = '0px';
-            locationInfo.style.overflow = 'hidden';
+            //locationInfo.style.maxHeight = '0px';
+            $('#locationInfo').collapse('hide');
         }
     }
 
@@ -119,7 +124,7 @@
         window.mapElem.style.paddingBottom = '62%';
         google.maps.event.trigger(map, 'resize');
 
-        window.map.setZoom(16)
+        window.map.setZoom(16);
 
         window.map.addListener('click', function() {
             toggleInfoVisible(false);
