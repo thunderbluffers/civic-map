@@ -1,12 +1,11 @@
 from django.shortcuts import (
     render,
     redirect,
-    reverse,
-    get_object_or_404,
-    get_list_or_404
+    get_object_or_404
 )
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from .models import Location
 from .forms import LocationForm
 
@@ -44,6 +43,8 @@ def edit(request, id):
             location = form.save(commit=False)
             location.user = request.user
             location.save()
+
+            return redirect('locations:view', id=location.id)
     else:
         form = LocationForm(instance=location)
 
@@ -62,9 +63,7 @@ def new(request):
             location.user = request.user
             location.save()
 
-            return redirect(
-                reverse('locations:edit', args=[location.id])
-            )
+            return redirect('locations:view', id=location.id)
     else:
         form = LocationForm()
 

@@ -1,13 +1,15 @@
 from django import forms
 from .models import Location
 
-from easy_maps.widgets import AddressWithMapWidget
+from easy_maps.widgets import MapWidget
 
 
 class LocationForm(forms.ModelForm):
     address = forms.CharField(
-        widget=AddressWithMapWidget({
-            'class': 'vTextField'
+        widget=MapWidget({
+            'class': 'vTextField',
+            'size': 60,
+            'hidden': True,
         }),
         initial='Bucharest, Romania',
     )
@@ -23,3 +25,7 @@ class LocationForm(forms.ModelForm):
     class Meta:
         model = Location
         exclude = ['user', 'tags']
+        widgets = {
+            'latitude': forms.NumberInput({'size': 22}),
+            'longitude': forms.NumberInput({'size': 22}),
+        }

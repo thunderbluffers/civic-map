@@ -41,25 +41,29 @@ class EasyMapTag(InclusionTag):
     template = 'easy_maps/map.html'
     options = Options(
         Argument('address', resolve=True, required=True),
-        Argument('width', required=False, default=None),
-        Argument('height', required=False, default=None),
+        IntegerArgument('width', required=False, default=None),
+        IntegerArgument('height', required=False, default=None),
         IntegerArgument('zoom', required=False, default=None),
         'using',
         Argument('template_name', default=None, required=False),
     )
 
     def render_tag(self, context, **kwargs):
-        params = dict((k, v) for k, v in kwargs.items() if v and k not in ['template_name'])
+        params = dict((k, v)
+                      for k, v in kwargs.items()
+                      if v and k != 'template_name')
         if 'address' in params and (len(params) == 2 or len(params) > 4):
             raise template.TemplateSyntaxError(
                 "easy_map tag has the following syntax: "
-                "{% easy_map <address> [<width> <height>] [zoom] [using <template_name>] %}"
+                "{% easy_map <address> [<width> <height>] "
+                "[zoom] [using <template_name>] %}"
             )
 
         if settings.EASY_MAPS_GOOGLE_MAPS_API_KEY is None:
             raise ImproperlyConfigured(
-                "easy_map tag requires EASY_MAPS_GOOGLE_MAPS_API_KEY to be set in global settings "
-                "because of the restrictions introduced in Google Maps API v3 by Google, Inc."
+                "easy_map tag requires EASY_MAPS_GOOGLE_MAPS_API_KEY to be "
+                "set in global settings because of the restrictions "
+                "introduced in Google Maps API v3 by Google, Inc."
             )
         return super(EasyMapTag, self).render_tag(context, **kwargs)
 
@@ -67,10 +71,17 @@ class EasyMapTag(InclusionTag):
         return kwargs.get('template_name', None) or self.template
 
     def get_context(self, context, **kwargs):
-        kwargs.update({'map': parse_address(kwargs.pop('address'))})
-        if not kwargs.get('zoom', None):
-            kwargs['zoom'] = 16  # default value
+        kwargs['map'] = parse_address(kwargs.pop('address'))
+        kwargs['lat'] = kwargs['map'].latitude
+        kwargs['lng'] = kwargs['map'].longitude
+
+        kwargs['width'] = kwargs.get('width', None) or 320
+        kwargs['height'] = kwargs.get('height', None) or 240
+        kwargs['zoom'] = kwargs.get('zoom', None) or 16
+
         kwargs['api_key'] = settings.EASY_MAPS_GOOGLE_MAPS_API_KEY
+
         return kwargs
+
 
 register.tag(EasyMapTag)
