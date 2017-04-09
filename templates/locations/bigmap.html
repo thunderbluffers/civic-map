@@ -8,6 +8,25 @@
     {% map initLocation.latitude initLocation.longitude %}
 </div>
 
+<div id="locationInfo" style="overflow: hidden; transition: max-height 0.4s; max-height: 0px; border-style: solid; border-width: 2px">
+    <h2 id="hName"></h2>
+    <ul>
+        <li>
+            <b>Description: </b>
+            <p id="pDescription"></p>
+        </li>
+        <li>
+            <b>Program: </b>
+            <p id="pProgram"></p>
+        </li>
+        <li>
+            <b>Contact: </b>
+            <p id="pContact"></p>
+        </li>
+    </ul>
+    <a id="aReviews" href="">View reviews</a>
+</div>
+
 {% endblock %}
 
 
@@ -17,19 +36,58 @@
 <script>
     var locations = [];
     {% for location in locations %}
-        locations.push({
+        locations.push({ // TODO: this can surely be done better
             lat: {{ location.latitude }},
-            lng: {{ location.longitude }}
+            lng: {{ location.longitude }},
+            name: '{{ location.name }}',
+            description: '{{ location.description }}',
+            program: '{{ location.program }}',
+            contact: '{{ location.contact_info }}',
+            url: '{{location.get_absolute_url}}'
         });
     {% endfor %}
+
+    var loadInfoWithLocation = function(location) {
+        var hName = document.getElementById('hName');
+        var pDescription = document.getElementById('pDescription');
+        var pProgram = document.getElementById('pProgram');
+        var pContact = document.getElementById('pContact');
+        var aReviews = document.getElementById('aReviews');
+
+        hName.innerHTML = location.name;
+        pDescription.innerHTML = location.description;
+        pProgram.innerHTML = location.program;
+        pContact.innerHTML = location.contact;
+        aReviews.href = location.url;
+    }
+
+    var toggleInfoVisible = function(b) {
+        var locationInfo = document.getElementById('locationInfo');
+        if (b === true) {
+            locationInfo.style.maxHeight = '300px';
+        }
+        else {
+            var aReviews = document.getElementById('aReviews');
+            aReviews.href = '';
+            locationInfo.style.maxHeight = '0px';
+        }
+    }
 
     // Adds a marker to the map.
     var addMarker = function(location, map) {
         // Add the marker at the clicked location, and add the next-available label
         // from the array of alphabetical characters.
         var marker = new google.maps.Marker({
-            position: location,
+            position: {
+                lat: location.lat,
+                lng: location.lng
+            },
             map: map
+        });
+
+        marker.addListener('click', function() {
+            loadInfoWithLocation(location);
+            toggleInfoVisible(true);
         });
 
         window.markers.push(marker);
@@ -37,7 +95,9 @@
 
     google.maps.event.addDomListener(window, 'load', function() {
         for (i in locations) {
-            addMarker(locations[i], window.map);
+            var location = locations[i];
+
+            addMarker(location, window.map);
         }
     });
 </script>
