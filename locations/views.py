@@ -7,8 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Location
-from .forms import LocationForm
 from civic_map import settings
+from .forms import LocationForm, ReviewForm
+
 
 
 def index(request):
@@ -30,9 +31,36 @@ def index(request):
 
 def view(request, id):
     location = get_object_or_404(Location, id=id)
-    context = {'location': location}
+    context = {
+        'location': location,
+        'reviews': location.review_set.all(),
+    }
 
     return render(request, 'locations/view.html', context)
+
+
+@login_required
+def review(request, id):
+    location = get_object_or_404(Location, id=id)
+
+    if request.method == 'POST':
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.location = location
+            review.save()
+
+            return redirect('locations:view', id=location.id)
+    else:
+        review_form = ReviewForm()
+
+    context = {
+        'location': location,
+        'review_form': review_form,
+    }
+
+    return render(request, 'locations/review.html', context)
 
 
 @login_required

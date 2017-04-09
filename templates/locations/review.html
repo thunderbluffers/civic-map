@@ -1,0 +1,22 @@
+{% extends "locations/view.html" %}
+{% load i18n %}
+{% load map_tags %}
+
+{% block page_title %}
+{{ location.name|title }} Review
+{% endblock %}
+
+{% block review_form %}
+<form method="POST">
+    {% csrf_token %}
+
+    {% for field in review_form %}
+        <div class="field-wrapper">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+    {% endfor %}
+
+    <input type="submit" value="{% trans "Submit" %}">
+</form>
+{% endblock %}
