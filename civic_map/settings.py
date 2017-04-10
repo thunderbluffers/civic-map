@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+
 ]
 
 ROOT_URLCONF = 'civic_map.urls'
@@ -68,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -118,6 +123,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#Specify what authentication backend is used when calling the authenticate() method
+AUTHENTICATION_BACKENDS = (
+    # 'social_core.backends.github.GithubOAuth2',
+    # 'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -142,3 +155,16 @@ STATIC_URL = '/static/'
 
 EASY_MAPS_GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', '')
 EASY_MAPS_CENTER = (44.4268118, 26.1000903)
+
+#Facebook Login
+
+SOCIAL_AUTH_FACEBOOK_KEY  = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY', '')
+SOCIAL_AUTH_FACEBOOK_SECRET  = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET', '')
+
+# Needed to overcome limitations databases impose on index column
+SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
+SOCIAL_AUTH_UID_LENGTH = 30
+SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 30
+SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 30
+SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 30
+SOCIAL_AUTH_EMAIL_LENGTH = 30

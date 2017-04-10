@@ -9,7 +9,8 @@
   <input type="submit" value="{% trans 'Log in' %}" />
   <input type="hidden" name="next" value="{{ next }}" />
 </form>
-
+ <p><strong>-- OR --</strong></p>
+  <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
 <p>
     {% trans "Forgot password?" %}
     <a href="{% url 'password_reset' %}">{% trans "Reset it!" %}</a>
