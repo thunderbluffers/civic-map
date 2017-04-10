@@ -103,6 +103,16 @@ def new(request):
 
 def bigmap(request):
     locations = Location.objects.all()
+    paginator = Paginator(locations, 10)
+    page = request.GET.get('page', default=1)
+    try:
+        locations = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        locations = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        locations = paginator.page(paginator.num_pages)
 
     lat, lng = settings.EASY_MAPS_CENTER
 
