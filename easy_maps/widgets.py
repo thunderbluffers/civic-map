@@ -33,7 +33,7 @@ class MapWidget(TextInput):
 
     tpl = (
         '{{%% load map_tags %%}}'
-        '{{%% map lat lng %d %d %d %%}}'
+        '{{%% map lat lng True %d %d %d %%}}'
     ) % (width, height, zoom)
 
     def render(self, name, value, attrs=None):

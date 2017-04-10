@@ -38,7 +38,7 @@
 
         window.markers = [];
         {% block extra_js %}
-            {% if setMarker == True %}
+            {% if set_marker %}
               var marker = new google.maps.Marker({
                   position: latlng,
                   map: map,
