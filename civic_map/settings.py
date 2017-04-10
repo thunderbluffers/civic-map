@@ -150,16 +150,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Easy Map
 
 EASY_MAPS_GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', '')
 EASY_MAPS_CENTER = (44.4268118, 26.1000903)
 
-#Facebook Login
+# Facebook Login
 
-SOCIAL_AUTH_FACEBOOK_KEY  = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY', '')
-SOCIAL_AUTH_FACEBOOK_SECRET  = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET', '')
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY', '')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET', '')
 
 # Needed to overcome limitations databases impose on index column
 SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'

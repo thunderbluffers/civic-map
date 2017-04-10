@@ -21,11 +21,8 @@
 
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="/">Home</a>
-                </li>
                 <li>
-                    <a href="{% url 'locations:bigmap' %}">Map</a>
+                    <a href="/">Home</a>
                 </li>
                 {% if user.is_authenticated %}
                 <li>

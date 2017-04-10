@@ -11,10 +11,10 @@ from civic_map import settings
 from .forms import LocationForm, ReviewForm
 
 
-
 def index(request):
     locations = Location.objects.all()
     paginator = Paginator(locations, 25)
+
     page = request.GET.get('page', default=1)
     try:
         locations = paginator.page(page)
@@ -24,7 +24,22 @@ def index(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         locations = paginator.page(paginator.num_pages)
-    context = {'locations': locations}
+
+    if len(locations) == 0:
+        lat, lng = settings.EASY_MAPS_CENTER
+    else:
+        lat = sum(l.latitude for l in locations) / len(locations)
+        lng = sum(l.longitude for l in locations) / len(locations)
+
+    map_center = {
+        'latitude': lat,
+        'longitude': lng,
+    }
+
+    context = {
+        'locations': locations,
+        'map_center': map_center
+    }
 
     return render(request, 'locations/index.html', context)
 
@@ -99,35 +114,3 @@ def new(request):
     context = {'form': form}
 
     return render(request, 'locations/edit.html', context)
-
-
-def bigmap(request):
-    locations = Location.objects.all()
-    paginator = Paginator(locations, 10)
-    page = request.GET.get('page', default=1)
-    try:
-        locations = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        locations = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        locations = paginator.page(paginator.num_pages)
-
-    if len(locations) == 0:
-        lat, lng = settings.EASY_MAPS_CENTER
-    else:
-        lat = locations[0].latitude
-        lng = locations[0].longitude
-
-    initLocation = {
-        'latitude': lat,
-        'longitude': lng,
-    }
-
-    context = {
-        'locations': locations,
-        'initLocation': initLocation
-    }
-
-    return render(request, 'locations/bigmap.html', context)

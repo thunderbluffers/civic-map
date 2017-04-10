@@ -1,8 +1,8 @@
 from django.db import models
 from civic_map import settings
+from django.urls import reverse
 
 
-# Create your models here.
 class Location(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=10240)
@@ -20,8 +20,7 @@ class Location(models.Model):
     # https://docs.djangoproject.com/en/1.10/ref/models/fields/#imagefield
 
     def get_absolute_url(self):
-        from django.urls import reverse
-        return reverse('locations:view', args=[str(self.id)])
+        return reverse('locations:view', args=[self.id])
 
     class Meta:
         ordering = ['-id']
