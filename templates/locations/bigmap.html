@@ -133,7 +133,7 @@
     }
 
     google.maps.event.addDomListener(window, 'load', function() {
-        for (i in locations) {
+        for (var i in locations) {
             var location = locations[i];
 
             addMarker(location, window.map);
