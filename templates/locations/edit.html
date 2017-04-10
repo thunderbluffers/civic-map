@@ -2,18 +2,29 @@
 {% load i18n %}
 
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
+<div class="row">
+    <div class="col-md-8">
+        <div id="addLocationBlock" class="login-panel panel panel-default">
+            <div class="panel-heading">
+                 <h3 class="panel-title">Add location</h3>
+            </div>
+            <div class="panel-body">
+                <form method="POST">
+                    {% csrf_token %}
 
-    {% for field in form %}
-        <div class="field-wrapper">
-            {{ field.errors }}
-            {{ field.label_tag }} {{ field }}
+                    {% for field in form %}
+                        <div class="field-wrapper">
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                        </div>
+                    {% endfor %}
+
+                    <input class="btn btn-lg btn-success" type="submit" value="{% trans "Submit" %}">
+                </form>
+            </div>
         </div>
-    {% endfor %}
-
-    <input type="submit" value="{% trans "Submit" %}">
-</form>
+    </div>
+</div>
 {% endblock %}
 
 {% block extrajs %}
