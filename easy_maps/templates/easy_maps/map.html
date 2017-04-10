@@ -36,17 +36,20 @@
 
         var map = new google.maps.Map(mapElem, mapOptions);
 
+        window.markers = [];
         {% block extra_js %}
-            var marker = new google.maps.Marker({
-                position: latlng,
-                map: map,
-                title: "{{ map.address }}"
-            });
+            {% if setMarker == True %}
+              var marker = new google.maps.Marker({
+                  position: latlng,
+                  map: map,
+                  title: "{{ map.address }}"
+              });
+              window.markers.push(marker);
+            {% endif %}
         {% endblock %}
 
         window.mapElem = mapElem;
         window.map = map;
-        window.markers = [marker];
     }
 
     {% block map_loading_js %}

@@ -114,7 +114,11 @@ def bigmap(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         locations = paginator.page(paginator.num_pages)
 
-    lat, lng = settings.EASY_MAPS_CENTER
+    if len(locations) == 0:
+        lat, lng = settings.EASY_MAPS_CENTER
+    else:
+        lat = locations[0].latitude
+        lng = locations[0].longitude
 
     initLocation = {
         'latitude': lat,

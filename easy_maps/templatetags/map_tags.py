@@ -22,6 +22,7 @@ class MapTag(InclusionTag):
     options = Options(
         Argument('lat', resolve=True, required=True),
         Argument('lng', resolve=True, required=True),
+        Argument('setMarker', required=False, default=False),
         IntegerArgument('width', required=False, default=320),
         IntegerArgument('height', required=False, default=240),
         IntegerArgument('zoom', required=False, default=18),
