@@ -8,7 +8,7 @@
 
 {% block content %}
 <div>
-    {% map location.latitude location.longitude %}
+    {% map location.latitude location.longitude True %}
 
     <p>{{ location.description }}</p>
     {% if user.is_authenticated %}
