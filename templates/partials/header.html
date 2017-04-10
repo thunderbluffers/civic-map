@@ -24,9 +24,6 @@
                 <li>
                     <a href="/">Home</a>
                 </li>
-                <li>
-                    <a href="{% url 'locations:bigmap' %}">Map</a>
-                </li>
                 {% if user.is_authenticated %}
                 <li>
                     <a href="{% url 'locations:new' %}">Add location</a>
