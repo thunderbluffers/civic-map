@@ -6,11 +6,7 @@
     <title>{% block title %}Civic Map{% endblock %}</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        html {
-            overflow-y: scroll;
-        }
-    </style>
+    <link href="{% static 'style.css' %}" rel="stylesheet">
 </head>
 <body>
 
@@ -25,6 +21,7 @@
 
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
     {% block extrajs %}{% endblock %}
 </body>
 </html>

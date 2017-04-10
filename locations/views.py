@@ -11,7 +11,6 @@ from civic_map import settings
 from .forms import LocationForm, ReviewForm
 
 
-
 def index(request):
     locations = Location.objects.all()
     paginator = Paginator(locations, 25)
@@ -104,6 +103,7 @@ def new(request):
 def bigmap(request):
     locations = Location.objects.all()
     paginator = Paginator(locations, 10)
+
     page = request.GET.get('page', default=1)
     try:
         locations = paginator.page(page)
@@ -117,17 +117,17 @@ def bigmap(request):
     if len(locations) == 0:
         lat, lng = settings.EASY_MAPS_CENTER
     else:
-        lat = locations[0].latitude
-        lng = locations[0].longitude
+        lat = sum(l.latitude for l in locations) / len(locations)
+        lng = sum(l.longitude for l in locations) / len(locations)
 
-    initLocation = {
+    map_center = {
         'latitude': lat,
         'longitude': lng,
     }
 
     context = {
         'locations': locations,
-        'initLocation': initLocation
+        'map_center': map_center
     }
 
     return render(request, 'locations/bigmap.html', context)

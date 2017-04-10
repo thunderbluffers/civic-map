@@ -3,8 +3,6 @@
 {% load map_tags %}
 
 {% block content %}
-
-<div class="container-fluid">
     <div class="row-fluid">
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
             {% for location in locations %}
@@ -36,7 +34,7 @@
         </div>
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <div>
-                {% map initLocation.latitude initLocation.longitude %}
+                {% map map_center.latitude map_center.longitude False 600 500 14 %}
             </div>
 
             <div id="locationInfo" class="panel panel-default panel-collapse collapse" style="overflow: hidden">
@@ -63,13 +61,11 @@
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 
 
 {% block extrajs %}
-
 <script>
     var locations = [];
     {% for location in locations %}
@@ -83,6 +79,13 @@
             url: '{{location.get_absolute_url}}'
         });
     {% endfor %}
+
+    var markersSetOpacity = function(opacity) {
+        opacity = opacity || 1;
+        for (var i in window.markers) {
+            window.markers[i].setOpacity(opacity);
+        }
+    }
 
     var loadInfoWithLocation = function(location) {
         var hName = document.getElementById('hName');
@@ -113,6 +116,8 @@
     }
 
     // Adds a marker to the map.
+    var LABELS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var labelIndex = 0;
     var addMarker = function(location, map) {
         // Add the marker at the clicked location, and add the next-available label
         // from the array of alphabetical characters.
@@ -121,12 +126,16 @@
                 lat: location.lat,
                 lng: location.lng
             },
+            label: LABELS[labelIndex++ % LABELS.length],
             map: map
         });
 
         marker.addListener('click', function() {
             loadInfoWithLocation(location);
             toggleInfoVisible(true);
+
+            markersSetOpacity(0.3);
+            this.setOpacity(1);
         });
 
         window.markers.push(marker);
@@ -134,23 +143,17 @@
 
     google.maps.event.addDomListener(window, 'load', function() {
         for (var i in locations) {
-            var location = locations[i];
-
-            addMarker(location, window.map);
+            addMarker(locations[i], window.map);
         }
 
         window.mapElem.style.width = '100%';
-        window.mapElem.style.paddingBottom = '62%';
         google.maps.event.trigger(map, 'resize');
-
-        window.map.setZoom(16);
 
         window.map.addListener('click', function() {
             toggleInfoVisible(false);
+            markersSetOpacity(1);
         });
     });
-
-
 </script>
 
 {% endblock %}
