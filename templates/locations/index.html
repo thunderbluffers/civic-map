@@ -11,7 +11,7 @@
                         <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
                     </div>
                     <div class="panel-body">
-                        <p>{{ location.description }}</p>
+                        <p>{{ location.description|truncatewords:10 }}</p>
                     </div>
                 </div>
             {% endfor %}
@@ -72,11 +72,11 @@
         locations.push({ // TODO: this can surely be done better
             lat: {{ location.latitude }},
             lng: {{ location.longitude }},
-            name: '{{ location.name }}',
-            description: '{{ location.description }}',
-            program: '{{ location.program }}',
-            contact: '{{ location.contact_info }}',
-            url: '{{location.get_absolute_url}}'
+            name: '{{ location.name|escapejs }}',
+            description: '{{ location.description|truncatewords:60|escapejs }}',
+            program: '{{ location.program|escapejs }}',
+            contact: '{{ location.contact_info|escapejs }}',
+            url: '{{ location.get_absolute_url }}'
         });
     {% endfor %}
 
