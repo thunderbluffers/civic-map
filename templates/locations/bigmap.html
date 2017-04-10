@@ -8,10 +8,14 @@
     <div class="row-fluid">
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
             {% for location in locations %}
-                <p>
-                    <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
-                    <p>{{ location.description }}</p>
-                </p>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
+                    </div>
+                    <div class="panel-body">
+                        <p>{{ location.description }}</p>
+                    </div>
+                </div>
             {% endfor %}
 
             <div class="pagination">
@@ -145,6 +149,8 @@
             toggleInfoVisible(false);
         });
     });
+
+
 </script>
 
 {% endblock %}
