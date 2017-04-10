@@ -4,22 +4,24 @@
 
 {% block page_title %}
 {{ location.name|title }}
+{% if user.is_authenticated %}
+    <span class="small">(<a href="{% url 'locations:edit' location.id %}">edit</a>)</span>
+{% endif %}
 {% endblock %}
 
 {% block content %}
 <div>
-    {% map location.latitude location.longitude True %}
+    <p>{% map location.latitude location.longitude True 800 400 %}</p>
 
-    <p>{{ location.description }}</p>
-    {% if user.is_authenticated %}
-        <a href="{% url 'locations:edit' location.id %}">editeaza aici baws</a>
-    {% endif %}
+    <blockquote>{{ location.description }}</blockquote>
 
     {% block review_form %}
     <div class="reviews">
         <h3 class="reviews__title">
             Reviews
-            (<a href="{% url 'locations:review' location.id %}">Add</a>)
+            <span class="small">
+                (<a href="{% url 'locations:review' location.id %}">Add</a>)
+            </span>
         </h3>
         {% if reviews %}
         <ul class="reviews__list">
