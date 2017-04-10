@@ -28,7 +28,8 @@ SECRET_KEY = '*jqio&rhj(^hqnm9ly02ye+x&=!aw6-4q7m08519bi$^z&#!*%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+DEV_HOST = os.getenv('DEV_HOST', '127.0.0.1')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', DEV_HOST]
 
 
 # Application definition
@@ -55,7 +56,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
-
 ]
 
 ROOT_URLCONF = 'civic_map.urls'

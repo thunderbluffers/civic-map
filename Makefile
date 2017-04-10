@@ -13,9 +13,10 @@ $(VENV)/bin/activate: requirements.txt
 
 install: $(VENV)
 
-runserver: DEV_ADDR=$(shell grep DEV_ADDR= .env | sed -e 's/DEV_ADDR=//')
+runserver: DEV_HOST=$(shell grep DEV_HOST= .env | sed -e 's/DEV_HOST=//')
+runserver: DEV_PORT=$(shell grep DEV_PORT= .env | sed -e 's/DEV_PORT=//')
 runserver: install
-	$(VENV)/bin/python3 manage.py runserver $(DEV_ADDR)
+	$(VENV)/bin/python3 manage.py runserver $(DEV_HOST):$(DEV_PORT)
 
 run: runserver
 

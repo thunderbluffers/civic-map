@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<h3 class="font-green">{% trans "Logged out" %}</h3>
+<p>
+    Thanks for spending some quality time with the Website today.
+</p>
+
+ <div class="row">
+    <div class="col-md-12">
+        <a href="{% url "login" %}" class="btn btn-success"> Log in again </a>
+    </div>
+</div>
+{% endblock %}
