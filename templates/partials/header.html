@@ -24,10 +24,10 @@
                 <li>
                     <a href="/">Home</a>
                 </li>
-                {% if user.is_authenticated %}
                 <li>
                     <a href="{% url 'locations:new' %}">Add location</a>
                 </li>
+                {% if user.is_authenticated %}
                 <li>
                     <a href="{% url 'logout' %}">
                         <i class="icon-key"></i> {% trans 'Logout' %} </a>

@@ -3,67 +3,66 @@
 {% load map_tags %}
 
 {% block content %}
-    <div class="row-fluid">
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-            {% for location in locations %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
-                    </div>
-                    <div class="panel-body">
-                        <p>{{ location.description|truncatewords:10 }}</p>
-                    </div>
-                </div>
-            {% endfor %}
-
-            <div class="pagination">
-                <span class="step-links">
-                    {% if locations.has_previous %}
-                        <a href="?page={{ locations.previous_page_number }}">previous</a>
-                    {% endif %}
-
-                    <span class="current">
-                        Page {{ locations.number }} of {{ locations.paginator.num_pages }}.
-                    </span>
-
-                    {% if locations.has_next %}
-                        <a href="?page={{ locations.next_page_number }}">next</a>
-                    {% endif %}
-                </span>
-            </div>
+<div class="row-fluid">
+    <div class="col-xs-12 col-md-9 col-lg-10">
+        <div>
+            {% map map_center.latitude map_center.longitude False 600 500 14 %}
         </div>
-        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            <div>
-                {% map map_center.latitude map_center.longitude False 600 500 14 %}
-            </div>
 
-            <div id="locationInfo" class="panel panel-default panel-collapse collapse" style="overflow: hidden">
-                <div class="panel-heading">
-                    <h2 id="hName"></h2>
-                </div>
-                <div class="panel-body">
-                    <ul>
-                        <li>
-                            <b>Description: </b>
-                            <p id="pDescription"></p>
-                        </li>
-                        <li>
-                            <b>Program: </b>
-                            <p id="pProgram"></p>
-                        </li>
-                        <li>
-                            <b>Contact: </b>
-                            <p id="pContact"></p>
-                        </li>
-                    </ul>
-                    <a id="aReviews" href="">View reviews</a>
-                </div>
+        <div id="locationInfo" class="panel panel-default panel-collapse collapse" style="overflow: hidden">
+            <div class="panel-heading">
+                <h2 id="hName"></h2>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li>
+                        <b>Description: </b>
+                        <p id="pDescription"></p>
+                    </li>
+                    <li>
+                        <b>Program: </b>
+                        <p id="pProgram"></p>
+                    </li>
+                    <li>
+                        <b>Contact: </b>
+                        <p id="pContact"></p>
+                    </li>
+                </ul>
+                <a id="aReviews" href="">View reviews</a>
             </div>
         </div>
     </div>
+
+    <div class="col-xs-12 col-md-3 col-lg-2">
+        {% for location in locations %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
+                </div>
+                <div class="panel-body">
+                    <p>{{ location.description|truncatewords:10 }}</p>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if locations.has_previous %}
+                    <a href="?page={{ locations.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ locations.number }} of {{ locations.paginator.num_pages }}.
+                </span>
+
+                {% if locations.has_next %}
+                    <a href="?page={{ locations.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
 {% endblock %}
-
-
 
 {% block extrajs %}
 <script>
