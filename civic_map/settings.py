@@ -89,6 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
         },
         'NAME': os.getenv('DB_NAME', 'civic_map'),
         'USER': os.getenv('DB_USER', 'root'),
