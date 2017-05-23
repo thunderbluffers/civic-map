@@ -5,6 +5,8 @@ from django.shortcuts import (
 )
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
+from functools import reduce
 
 from .models import Location
 from civic_map import settings
@@ -12,8 +14,19 @@ from .forms import LocationForm, ReviewForm
 
 from decimal import *
 
+import operator
+
 def index(request):
-    locations = Location.objects.all()
+    query = request.GET.get('q')
+    if query:
+        query_list = query.split()
+        locations = Location.objects.filter(
+            reduce(operator.and_,
+                   (Q(name__icontains=q) for q in query_list))
+        )
+    else:
+        locations = Location.objects.all()
+
     paginator = Paginator(locations, 25)
 
     page = request.GET.get('page', default=1)
