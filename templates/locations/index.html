@@ -40,6 +40,7 @@
                     <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
                 </div>
                 <div class="panel-body">
+                    <p>{{ location.credibility }}</p><!-- TEMPORARY -->
                     <p>{{ location.description|truncatewords:10 }}</p>
                 </div>
             </div>
@@ -66,6 +67,21 @@
 
 {% block extrajs %}
 <script>
+    var getOpacityForCredibility = function(cred) {
+        var minCred = 0.0; // MAGIC
+        var maxCred = 1.0; // MAGIC
+        var minOpac = 0.5; // A KIND OF MAGIC
+        var maxOpac = 1.0; // MAGIC NUMEROS
+
+        cred = Math.max(minCred, cred);
+        cred = Math.min(maxCred, cred);
+
+        var ratio = (cred - minCred) / (maxCred - minCred);
+        var opac = minOpac + (maxOpac - minOpac) * ratio;
+
+        return opac;
+    }
+
     var locations = [];
     {% for location in locations %}
         locations.push({ // TODO: this can surely be done better
@@ -75,14 +91,18 @@
             description: '{{ location.description|truncatewords:60|escapejs }}',
             program: '{{ location.program|escapejs }}',
             contact: '{{ location.contact_info|escapejs }}',
+            opacity: getOpacityForCredibility({{ location.credibility }}),
             url: '{{ location.get_absolute_url }}'
         });
     {% endfor %}
 
-    var markersSetOpacity = function(opacity) {
-        opacity = opacity || 1;
+
+
+    var markersSetOpacity = function(ratio) {
+        ratio = ratio || 1;
         for (var i in window.markers) {
-            window.markers[i].setOpacity(opacity);
+            var marker = window.markers[i];
+            marker.setOpacity(ratio * marker.defaultOpacity);
         }
     }
 
@@ -126,15 +146,17 @@
                 lng: location.lng
             },
             label: LABELS[labelIndex++ % LABELS.length],
-            map: map
+            map: map,
+            defaultOpacity: location.opacity,
+            opacity: location.opacity
         });
 
         marker.addListener('click', function() {
             loadInfoWithLocation(location);
             toggleInfoVisible(true);
 
-            markersSetOpacity(0.3);
-            this.setOpacity(1);
+            markersSetOpacity(0.5);
+            this.setOpacity(marker.defaultOpacity);
         });
 
         window.markers.push(marker);
