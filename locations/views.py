@@ -22,7 +22,9 @@ def index(request):
         query_list = query.split()
         locations = Location.objects.filter(
             reduce(operator.and_,
-                   (Q(name__icontains=q) for q in query_list))
+                   (Q(name__icontains=q) for q in query_list)) |
+            reduce(operator.and_,
+                   (Q(description__icontains=q) for q in query_list))
         )
     else:
         locations = Location.objects.all()
