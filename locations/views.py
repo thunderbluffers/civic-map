@@ -10,6 +10,7 @@ from .models import Location
 from civic_map import settings
 from .forms import LocationForm, ReviewForm
 
+from decimal import *
 
 def index(request):
     locations = Location.objects.all()
@@ -65,6 +66,9 @@ def review(request, id):
             review.user = request.user
             review.location = location
             review.save()
+
+            location.credibility += Decimal(0.25);
+            location.save();
 
             return redirect('locations:view', id=location.id)
     else:
