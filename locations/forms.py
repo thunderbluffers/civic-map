@@ -24,7 +24,7 @@ class LocationForm(forms.ModelForm):
 
     class Meta:
         model = Location
-        exclude = ('user', 'tags')
+        exclude = ('user', 'tags', 'credibility')
         widgets = {
             'latitude': forms.NumberInput({'size': 26}),
             'longitude': forms.NumberInput({'size': 26}),
