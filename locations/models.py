@@ -10,6 +10,7 @@ class Location(models.Model):
     longitude = models.DecimalField(max_digits=20, decimal_places=18)
     program = models.CharField(max_length=255)
     contact_info = models.CharField(max_length=255)
+    credibility = models.DecimalField(max_digits=20, decimal_places=18, default=0.0)
     tags = models.ManyToManyField('Tag')
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
