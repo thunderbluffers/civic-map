@@ -43,6 +43,10 @@
             </div>
         </form>
 
+        {% if query %}
+            <p>Showing search results for: '{{ query }}'</p>
+        {% endif %}
+
         {% for location in locations %}
             <div class="panel panel-default">
                 <div class="panel-heading">

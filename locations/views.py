@@ -54,7 +54,8 @@ def index(request):
 
     context = {
         'locations': locations,
-        'map_center': map_center
+        'map_center': map_center,
+        'query': query
     }
 
     return render(request, 'locations/index.html', context)
