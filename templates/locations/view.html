@@ -11,34 +11,69 @@
 
 {% block content %}
 <div>
-    <p>{% map location.latitude location.longitude True 800 400 %}</p>
+    <div class="col-xs-12 col-md-7 col-lg-7">
+        <p>{% map location.latitude location.longitude True 800 400 %}</p>
 
-    <blockquote>{{ location.description }}</blockquote>
+        <blockquote>{{ location.description }}</blockquote>
 
-    {% block review_form %}
-    <div class="reviews">
-        <h3 class="reviews__title">
-            Reviews
-            <span class="small">
-                (<a href="{% url 'locations:review' location.id %}">Add</a>)
-            </span>
-        </h3>
-        {% if reviews %}
-        <ul class="reviews__list">
-        {% for review in reviews %}
-            <li>
-                {{ review.content }} -
-                {{ review.get_mark_display }} -
-                {{ review.user.username }}
-            </li>
-        {% endfor %}
-        </ul>
-        {% else %}
-        <div class="reviews__empty">
-            No reviews yet
+        {% block review_form %}
+        <div class="reviews">
+            <h3 class="reviews__title">
+                Reviews
+                <span class="small">
+                    (<a href="{% url 'locations:review' location.id %}">Add</a>)
+                </span>
+            </h3>
+            {% if reviews %}
+            <ul class="reviews__list">
+            {% for review in reviews %}
+                <li>
+                    {{ review.content }} -
+                    {{ review.get_mark_display }} -
+                    {{ review.user.username }}
+                </li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <div class="reviews__empty">
+                No reviews yet
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
+        {% endblock %}
     </div>
-    {% endblock %}
+    <div class="col-xs-12 col-md-5 col-lg-5">
+        <div id="locationInfo" class="panel panel-default" style="overflow: hidden">
+            <div class="panel-heading">
+                <h2 id="hName">{{ location.name }}</h2>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li>
+                        <b>Description: </b>
+                        <p id="pDescription">{{ location.description }}</p>
+                    </li>
+                    <li>
+                        <b>Program: </b>
+                        <p id="pProgram">{{ location.program }}</p>
+                    </li>
+                    <li>
+                        <b>Contact: </b>
+                        <p id="pContact">{{ location.contact_info }}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+
+{% block extrajs %}
+<script>
+    google.maps.event.addDomListener(window, 'load', function() {
+        window.mapElem.style.width = '100%';
+        google.maps.event.trigger(map, 'resize');
+    });
+</script>
 {% endblock %}
