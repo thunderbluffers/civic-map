@@ -34,28 +34,32 @@
 
     <div class="col-xs-12 col-md-8 col-lg-8">
         {% block review_form %}
-        <div class="reviews">
-            <h3 class="reviews__title">
-                Reviews
-                <span class="small">
-                    (<a href="{% url 'locations:review' location.id %}">Add</a>)
-                </span>
-            </h3>
-            {% if reviews %}
-            <ul class="reviews__list">
-            {% for review in reviews %}
-                <li>
-                    {{ review.content }} -
-                    {{ review.get_mark_display }} -
-                    {{ review.user.username }}
-                </li>
-            {% endfor %}
-            </ul>
-            {% else %}
-            <div class="reviews__empty">
-                No reviews yet
+        <div id="locationInfo" class="reviews panel panel-default">
+            <div class="panel-heading">
+                <h3 class="reviews__title">
+                    Reviews
+                    <span class="small">
+                        (<a href="{% url 'locations:review' location.id %}">Add</a>)
+                    </span>
+                </h3>
             </div>
-            {% endif %}
+            <div class="panel-body">
+                {% if reviews %}
+                <ul class="reviews__list">
+                {% for review in reviews %}
+                    <li>
+                        {{ review.content }} -
+                        {{ review.get_mark_display }} -
+                        {{ review.user.username }}
+                    </li>
+                {% endfor %}
+                </ul>
+                {% else %}
+                <div class="reviews__empty">
+                    No reviews yet
+                </div>
+                {% endif %}
+            </div>
         </div>
         {% endblock %}
     </div>
