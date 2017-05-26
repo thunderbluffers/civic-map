@@ -3,6 +3,8 @@ VENV=.venv
 PYTHON_BIN=python3
 PIP_BIN=$(VENV)/bin/pip
 
+DJANGO_MANAGE_BIN=$(VENV)/bin/python manage.py
+
 all: install
 
 $(VENV): $(VENV)/bin/activate
@@ -11,12 +13,14 @@ $(VENV)/bin/activate: requirements.txt
 	$(PIP_BIN) install -r $<
 	touch $@
 
-install: $(VENV)
+django-migrate:
+	yes | $(DJANGO_MANAGE_BIN) migrate
 
-runserver: DEV_HOST=$(shell grep DEV_HOST= .env | sed -e 's/DEV_HOST=//')
-runserver: DEV_PORT=$(shell grep DEV_PORT= .env | sed -e 's/DEV_PORT=//')
+install: $(VENV) django-migrate
+
+runserver: DEV_ADDR=$(shell grep DEV_ADDR= .env | sed -e 's/DEV_ADDR=//')
 runserver: install
-	$(VENV)/bin/python3 manage.py runserver $(DEV_HOST):$(DEV_PORT)
+	$(VENV)/bin/python3 manage.py runserver $(DEV_ADDR)
 
 run: runserver
 
