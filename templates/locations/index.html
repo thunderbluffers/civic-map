@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load map_tags %}
+{% load url_replace %}
 
 {% block content %}
 <div class="row-fluid">
@@ -9,7 +10,7 @@
             {% map map_center.latitude map_center.longitude False 600 500 14 %}
         </div>
 
-        <div id="locationInfo" class="panel panel-default panel-collapse collapse" style="overflow: hidden">
+        <div id="locationInfo" class="panel panel-default panel-collapse collapse" style="overflow:hidden">
             <div class="panel-heading">
                 <h2 id="hName"></h2>
             </div>
@@ -34,7 +35,7 @@
     </div>
 
     <div class="col-xs-12 col-md-3 col-lg-3">
-        <form class="navbar-form" action="" method="GET">
+        <form class="navbar-form" method="GET">
             <div class="input-group">
             <input type="text" class="form-control" placeholder="Search" name="q">
             <div class="input-group-btn">
@@ -46,34 +47,47 @@
         {% if query %}
             <p>Showing search results for: '{{ query }}'</p>
         {% endif %}
+    </div>
 
-        {% for location in locations %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
-                </div>
-                <div class="panel-body">
-                    <p>{{ location.description|truncatewords:10 }}</p>
-                </div>
+    {% for location in locations %}
+    <div class="col-xs-6 col-md-3 col-lg-3">
+        <div class="panel panel-default locations-item">
+            <div class="panel-heading">
+                <a href="{{ location.get_absolute_url }}"
+                    title="{{ location.name }}"
+                    class="locations-item__title">
+                    {{ location.name }}
+                </a>
             </div>
-        {% endfor %}
-
-        <div class="pagination">
-            <span class="step-links">
-                {% if locations.has_previous %}
-                    <a href="?page={{ locations.previous_page_number }}">previous</a>
-                {% endif %}
-
-                <span class="current">
-                    Page {{ locations.number }} of {{ locations.paginator.num_pages }}.
-                </span>
-
-                {% if locations.has_next %}
-                    <a href="?page={{ locations.next_page_number }}">next</a>
-                {% endif %}
-            </span>
+            {% if location.description %}
+            <div class="panel-body">
+                <p class="locations-item__description">
+                    {{ location.description|truncatewords:10 }}
+                </p>
+            </div>
+            {% endif %}
         </div>
     </div>
+    {% endfor %}
+
+    {% if locations.paginator.num_pages > 1 %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if locations.has_previous %}
+                <a
+                href="?{% url_replace page=locations.previous_page_number %}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ locations.number }} of {{ locations.paginator.num_pages }}.
+            </span>
+
+            {% if locations.has_next %}
+                <a href="?{% url_replace page=locations.next_page_number %}">next</a>
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
 
@@ -107,8 +121,6 @@
             url: '{{ location.get_absolute_url }}'
         });
     {% endfor %}
-
-
 
     var markersSetOpacity = function(ratio) {
         ratio = ratio || 1;
@@ -188,5 +200,4 @@
         });
     });
 </script>
-
 {% endblock %}
