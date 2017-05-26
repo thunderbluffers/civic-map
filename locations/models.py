@@ -17,7 +17,7 @@ class Location(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
-
+    photo = models.ImageField(default="civic-map/static/no-image-icon-23485.png")
     # putem folosi un ImageField pentru o poza cu locatia
     # https://docs.djangoproject.com/en/1.10/ref/models/fields/#imagefield
 
