@@ -1,6 +1,5 @@
 from django.contrib import admin
+from simple_history.admin import SimpleHistoryAdmin
+from .models import Location
 
-# Register your models here.
-
-# TODO de pus toate chestiile de adminareala aici
-# a se vedea user
+admin.site.register(Location, SimpleHistoryAdmin)

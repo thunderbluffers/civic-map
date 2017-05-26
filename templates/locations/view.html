@@ -30,7 +30,8 @@
                 </li>
                  <li>
                     <b>Credibility: </b>
-                    <p id="pCredibility"></p>
+                    {% widthratio location.credibility 1 100 as credibility %}
+                    <p id="pCredibility">{{ credibility }}%</p>
                 </li>
             </ul>
         </blockquote>
@@ -73,18 +74,9 @@
 
 {% block extrajs %}
 <script>
-    var credibilityToPercent = function(cred) {console.log(cred);
-        var cred = Math.max(0, Math.min(1, cred));
-        var proc = Math.round(cred * 100);
-
-        return proc;
-    }
-
-    document.getElementById('pCredibility').innerHTML = "Credibility: " + credibilityToPercent({{ location.credibility }}) + "%";
-
-    google.maps.event.addDomListener(window, 'load', function() {
-        window.mapElem.style.width = '100%';
-        google.maps.event.trigger(map, 'resize');
-    });
+google.maps.event.addDomListener(window, 'load', function() {
+    window.mapElem.style.width = '100%';
+    google.maps.event.trigger(map, 'resize');
+});
 </script>
 {% endblock %}

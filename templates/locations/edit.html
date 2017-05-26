@@ -6,7 +6,15 @@
     <div class="col-md-8">
         <div id="addLocationBlock" class="login-panel panel panel-default">
             <div class="panel-heading">
-                 <h3 class="panel-title">Add location</h3>
+                 <h3 class="panel-title">
+                    {% if form.instance and form.instance.id %}
+                        Edit location
+                        <a href="{{ form.instance.get_absolute_url }}">
+                            {{ form.instance.name }}</a>
+                    {% else %}
+                        Add location
+                    {% endif %}
+                </h3>
             </div>
             <div class="panel-body">
                 <form method="POST">

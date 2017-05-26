@@ -57,7 +57,6 @@ textarea {
 }
 
 
-
 .map-canvas
 {
     width:100%;
@@ -120,28 +119,5 @@ textarea {
     position:relative;
     left:10%;
 
-}
-
-a {
-    color: #0087a9;
-}
-
-.locations-item {
-
-}
-
-.locations-item__title {
-    display: block;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.locations-item__description {
-    line-height: 1.4;
-    height: 2.8em; /* 2 lines * 1.4 line-height */
-    overflow: hidden;
-    text-overflow: clip;
 }
 
