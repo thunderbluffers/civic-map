@@ -16,6 +16,7 @@
     <blockquote>{{ location.description }}</blockquote>
 
     {% block review_form %}
+    <img src="{{location.photo.url}}" alt="PhotoView" style="width:300px;height:300px"/>
     <div class="reviews">
         <h3 class="reviews__title">
             Reviews
@@ -23,7 +24,6 @@
                 (<a href="{% url 'locations:review' location.id %}">Add</a>)
             </span>
         </h3>
-             <img src="{{location.photo.url}}" alt="PhotoView" style="width:300px;height:300px"/>
 
         {% if reviews %}
         <ul class="reviews__list">
