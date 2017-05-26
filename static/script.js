@@ -9,6 +9,3 @@ var navMenuActive = function(selector) {
     });
 }
 
-jQuery('document').ready(function($) {
-    navMenuActive('.nav.navbar-nav');
-});

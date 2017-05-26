@@ -11,7 +11,7 @@
     class="easy-map-googlemap">
     {% block noscript %}{% if lat and lng %}
       <noscript>
-        <img alt="Map of {{ map.address }}" src="https://maps.google.com/maps/api/staticmap?center={{ lat }},{{ lng }}&amp;zoom={{ zoom }}&amp;markers={{ lat }},{{ lng }}&amp;size={{ width }}x{{ height }}&amp;key={{ api_key }}">
+        <img width="100%" height="100%" alt="Map of {{ map.address }}" src="https://maps.google.com/maps/api/staticmap?center={{ lat }},{{ lng }}&amp;zoom={{ zoom }}&amp;markers={{ lat }},{{ lng }}&amp;size={{ width }}x{{ height }}&amp;key={{ api_key }}">
       </noscript>
     {% endif %}{% endblock %}
     {% if not lat or not lng %}<!-- geocoding error -->{% endif %}

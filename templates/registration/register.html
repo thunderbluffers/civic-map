@@ -12,7 +12,7 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input class="btn btn-lg btn-success"  type="submit" value="{% trans 'Register' %}" />
+                <input id="register_btn" class="btn btn-lg btn-success"  type="submit" value="{% trans 'Register' %}" />
                 <input type="hidden" name="next" value="{{ next }}" />
             </form>
             <h6>
