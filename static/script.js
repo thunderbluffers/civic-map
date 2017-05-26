@@ -7,7 +7,7 @@ var navMenuActive = function(selector) {
             $item.parent('li').addClass('active');
         }
     });
-}
+};
 
 jQuery('document').ready(function($) {
     navMenuActive('.nav.navbar-nav');
