@@ -29,6 +29,27 @@
 
 {% block extrajs %}
 <script>
+
+    if (navigator.geolocation) {
+            var im = "http://www.robotwoods.com/dev/misc/bluecircle.png";  // Keep it local?
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                map.setCenter(pos);
+                var userMarker = new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                });
+
+                //Add current position as default one on map
+                $('#id_latitude').val(pos.lat);
+                $('#id_longitude').val(pos.lng);
+
+            });
+        }
+
 // Adds a marker to the map.
 var addMarker = function(location, map) {
     // Add the marker at the clicked location, and add the next-available label
