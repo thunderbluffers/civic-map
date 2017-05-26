@@ -29,7 +29,7 @@ def index(request):
     else:
         locations = Location.objects.all()
 
-    paginator = Paginator(locations, 25)
+    paginator = Paginator(locations, 50)
 
     page = request.GET.get('page', default=1)
     try:

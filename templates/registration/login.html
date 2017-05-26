@@ -12,22 +12,22 @@
                 {% csrf_token %}
                 {{ form.as_p }}
 
-                <input class="btn btn-lg btn-success" type="submit" value="{% trans 'Log in' %}" />
+                <input id="login_btn" class="btn btn-lg btn-success" type="submit" value="{% trans 'Log in' %}" />
                 <input type="hidden" name="next" value="{{ next }}" />
             </form>
 
-            <p>
+            <p class="login_text">
             {% trans "Forgot password?" %}
             <a href="{% url 'password_reset' %}">{% trans "Reset it!" %}</a>
             </p>
 
-            <p>
+            <p class="login_text">
             {% trans "Don't have an account?" %}
             <a href="{% url 'register' %}">{% trans "Register!" %}</a>
             </p>
 
-            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary">
-                <i class="fa fa-facebook-official fa-fw fa-2x" aria-hidden="true"></i>
+            <a href="{% url 'social:begin' 'facebook' %}" id="fb_btn" class="btn btn-primary">
+                <i  class="fa fa-facebook-official fa-fw fa-2x" aria-hidden="true"></i>
                 Login with Facebook
             </a>
         </div>

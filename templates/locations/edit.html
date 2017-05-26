@@ -27,7 +27,7 @@
                         </div>
                     {% endfor %}
 
-                    <input class="btn btn-lg btn-success" type="submit" value="{% trans "Submit" %}">
+                    <input id="submit_btn" class="btn btn-lg btn-success" type="submit" value="{% trans "Submit" %}">
                 </form>
             </div>
         </div>
@@ -60,6 +60,7 @@ google.maps.event.addDomListener(window, 'load', function() {
         $('#id_latitude').val(event.latLng.lat());
         $('#id_longitude').val(event.latLng.lng());
     });
+    window.mapElem.style.width = '100%';
 });
 </script>
 {% endblock %}
