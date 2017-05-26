@@ -7,5 +7,5 @@ var navMenuActive = function(selector) {
             $item.parent('li').addClass('active');
         }
     });
-}
+};
 
