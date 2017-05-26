@@ -7,7 +7,7 @@ form input
     border-bottom: 10px;
     border-radius: 5px;
     border: 1px solid black;
-    padding-left: 8px;
+    padding: 0 8px;
 }
 
 .field-wrapper
@@ -44,4 +44,27 @@ textarea
     border-radius: 5px;
     border: 1px solid black;
     padding-left: 8px;
+}
+
+a {
+    color: #0087a9;
+}
+
+.locations-item {
+
+}
+
+.locations-item__title {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.locations-item__description {
+    line-height: 1.4;
+    height: 2.8em; /* 2 lines * 1.4 line-height */
+    overflow: hidden;
+    text-overflow: clip;
 }
