@@ -1,6 +1,7 @@
 from django.db import models
-from civic_map import settings
 from django.urls import reverse
+from simple_history.models import HistoricalRecords
+from civic_map import settings
 
 
 class Location(models.Model):
@@ -10,7 +11,7 @@ class Location(models.Model):
     longitude = models.DecimalField(max_digits=20, decimal_places=18)
     program = models.CharField(max_length=255)
     contact_info = models.CharField(max_length=255)
-    credibility = models.DecimalField(max_digits=20, decimal_places=18, default=0.0)
+    credibility = models.DecimalField(max_digits=5, decimal_places=4, default=0.0)
     tags = models.ManyToManyField('Tag')
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -20,8 +21,21 @@ class Location(models.Model):
     # putem folosi un ImageField pentru o poza cu locatia
     # https://docs.djangoproject.com/en/1.10/ref/models/fields/#imagefield
 
+    history = HistoricalRecords()
+
+    @property
+    def _history_user(self):
+        return self.user
+
+    @_history_user.setter
+    def _history_user(self, value):
+        self.user = value
+
     def get_absolute_url(self):
         return reverse('locations:view', args=[self.id])
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         ordering = ['-id']
