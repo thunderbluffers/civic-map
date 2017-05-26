@@ -2,8 +2,7 @@ html {
     overflow-y: scroll;
 }
 
-form input
-{
+form input {
     border-bottom: 10px;
     border-radius: 5px;
     border: 1px solid lightgray;
@@ -13,32 +12,21 @@ form input
     padding-bottom: 5px;
 }
 
-.field-wrapper
-{
+.field-wrapper {
     margin-bottom: 10px;
 }
 
-form label, form input
-{
-    position:relative;
-    top:50%;
-    left:10%;
+form label, form input {
     display: block;
-
 }
 
-
-p span
-{
-    top:50%;
-    lef:20%;
+p span {
     display: block;
     font-size: 10px;
     margin-top: 5px;
 }
 
-.panel-title
-{
+.panel-title {
     font-size: 25px;
 }
 
@@ -46,10 +34,7 @@ textarea {
     padding-top: 3px;
     padding-bottom: 3px;
     margin-bottom: 20px;
-    position:relative;
-    top:50%;
-    left:10%;
-    width:80%;
+    width: 80%;
     border-bottom: 10px;
     border-radius: 5px;
     border: 1px solid lightgray;
@@ -59,65 +44,35 @@ textarea {
 .map-canvas
 {
     width:100%;
-
 }
 
-.panel-heading
-{
+.panel-heading {
     background-color: whitesmoke;
 }
 
-.panel-body
-{
+.panel-body {
     background-color: ghostwhite;
-
 }
 
-#submit_btn
-{
-    margin-top:30px;
-    position: relative;
-    top:50%;
-    left:30%;
-    width:40%;
+#submit_btn {
+    margin-top: 30px;
+    width: 40%;
 }
 
-#login_btn
-{
+#login_btn {
     padding-top: 3px;
     padding-bottom: 3px;
     margin-bottom: 20px;
-    position:relative;
-    top:50%;
-    left:30%;
-    width:40%;
+    width: 40%;
 }
 
-#register_btn
-{
+#register_btn {
     padding-top: 3px;
     padding-bottom: 3px;
     padding-left: 10px;
-    padding-right:10px;
+    padding-right: 10px;
     margin-bottom: 20px;
-    position:relative;
-    top:50%;
-    left:30%;
-    width:40%;
-}
-
-#fb_btn
-{
-    position:relative;
-    top:50%;
-    left:10%;
-}
-
-.login_text
-{
-    position:relative;
-    left:10%;
-
+    width: 40%;
 }
 
 a {
