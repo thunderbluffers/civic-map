@@ -11,12 +11,27 @@ class Location(models.Model):
     longitude = models.DecimalField(max_digits=20, decimal_places=18)
     program = models.CharField(max_length=255)
     contact_info = models.CharField(max_length=255)
-    credibility = models.DecimalField(max_digits=5, decimal_places=4, default=0.0)
-    tags = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField('Tag', blank=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
+
+    _credibility = models.DecimalField(
+        max_digits=5,
+        decimal_places=4,
+        default=0.0,
+        db_column='credibility'
+    )
+
+    @property
+    def credibility(self):
+        return min(1, max(self._credibility, 0))
+
+    @credibility.setter
+    def credibility(self, value):
+        self._credibility = min(1, max(value, 0))
+
 
     # putem folosi un ImageField pentru o poza cu locatia
     # https://docs.djangoproject.com/en/1.10/ref/models/fields/#imagefield
@@ -62,7 +77,7 @@ class Review(models.Model):
     content = models.TextField(max_length=65535, blank=True, null=True)
     mark = models.PositiveSmallIntegerField(
         choices=MARK_CHOICES,
-        default=MARK_1,
+        default=MARK_5,
     )
 
     user = models.ForeignKey(

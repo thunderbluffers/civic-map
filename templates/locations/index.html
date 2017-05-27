@@ -61,7 +61,7 @@
                 <a href="{{ location.get_absolute_url }}"
                     title="{{ location.name }}"
                     class="locations-item__title">
-                    {{ location.name }}
+                    {{ location.name|title }}
                 </a>
             </div>
             {% if location.description %}
